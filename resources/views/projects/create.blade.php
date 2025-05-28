@@ -21,7 +21,7 @@
             <h1 class="mb-0 fs-3 fw-bold">Create New Project</h1>
           </div>
           <div class="card-body p-4">
-            <form action="/projects/store" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <form action="/projects/storeForProject" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
               @csrf
               <div class="mb-3">
                 <label for="title" class="form-label fw-semibold">Project Title</label>
