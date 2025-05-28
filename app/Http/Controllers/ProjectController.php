@@ -1,19 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        // Fetch all projects from the database
-        $items = Project::latest()->paginate(3);
+            if(Auth::check()){
+                // Fetch all projects from the database
+            $items = Project::latest()->paginate(3);
 
-        return view('projects.index', 
-        ['projects' => $items]);
+            return view('projects.index', 
+            ['projects' => $items]);
+        }
+        else{
+            return redirect()->route('userAuth.login');
+        }
+       
     }
 
       public function all_projects()
@@ -31,7 +37,7 @@ class ProjectController extends Controller
         return view('projects.create');
     }
 
-    public function store(Request $request)
+    public function storeForProject(Request $request)
     {
         $statusMap = [
             'draft' => 1,
@@ -52,7 +58,7 @@ class ProjectController extends Controller
         $request->image->move(public_path('projects'), $imagename);
         
         // Create new project
-        $project = new Project();
+        $project = new project();
         $project->name = $request->name;
         $project->description = $request->description;
         $project->image = $imagename;
@@ -127,11 +133,17 @@ class ProjectController extends Controller
         
         return redirect()->route('projects.index')->withSuccess('Project deleted successfully.');
     }
-    
-    //   public function show($id)
-    // {
-    //     $project = Project::findOrFail($id);
-        
-    //     return view('projects.show',['project' =>$project]);
-    // }
+
+   
 }
+
+
+
+
+
+
+
+
+
+
+
